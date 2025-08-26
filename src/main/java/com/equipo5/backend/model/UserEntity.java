@@ -32,10 +32,10 @@ public class UserEntity {
     private Role rol;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ServiceEntity> services;
+    private List<ServiceEntity> services = new ArrayList<>();
 
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
