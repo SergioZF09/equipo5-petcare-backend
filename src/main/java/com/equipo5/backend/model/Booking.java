@@ -10,7 +10,6 @@ Establecer relaciones @ManyToOne hacia Pet, Service y User (owner).
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 
