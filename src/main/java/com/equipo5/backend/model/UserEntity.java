@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -33,10 +32,10 @@ public class UserEntity {
     private Role rol;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ServiceEntity> services;
+    private List<ServiceEntity> services = new ArrayList<>();
 
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
