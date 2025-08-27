@@ -3,11 +3,9 @@ package com.equipo5.backend.model;
 
 import com.equipo5.backend.model.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Table(name ="users")
-public class UserEntity {
+public class UserEntity extends TimeStampedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +25,12 @@ public class UserEntity {
     private String email;
 
     private String password;
+
+    private String phone;
+
+    private String address;
+
+    private String avatarUser;
 
     @Enumerated(EnumType.STRING)
     private Role rol;
@@ -40,20 +44,4 @@ public class UserEntity {
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
 
-    @Column(name = "created_at_user", updatable = false)
-    @NotNull
-    private Instant createdAt;
-    @Column(name = "updated_at_user")
-    @NotNull
-    private Instant updatedAt;
-    @PrePersist
-    public void prePersist() {
-        Instant now = Instant.now();
-        this.createdAt = now;
-        this.updatedAt = now;
-    }
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = Instant.now();
-    }
 }

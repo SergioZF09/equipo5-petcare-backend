@@ -6,9 +6,9 @@ import com.equipo5.backend.model.UserEntity;
 import java.util.List;
 
 public record ServiceEntityResponseDTO(
-        String name,
+        String type,
         String description,
-        Double price,
+        Double rate,
         UserEntity owners,
         List<Booking> bookings) {
 }

@@ -8,5 +8,8 @@ public record UserRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'email'")
         String email,
         @NotBlank(message = "Incomplete attribute: 'password'")
-        String password) {
+        String password,
+        String phone,
+        String address,
+        String avatarUser) {
 }
