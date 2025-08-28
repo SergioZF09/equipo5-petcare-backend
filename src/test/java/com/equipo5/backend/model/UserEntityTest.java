@@ -17,6 +17,9 @@ class UserEntityTest {
         user.setName("John Doe");
         user.setEmail("john@example.com");
         user.setPassword("12345");
+        user.setAddress("Calle");
+        user.setPhone("123123123");
+        user.setAvatarUser("avatar user");
         user.setRol(Role.ADMINISTRATOR);
 
         assertEquals("John Doe", user.getName());
