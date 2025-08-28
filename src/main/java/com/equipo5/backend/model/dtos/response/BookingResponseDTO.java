@@ -11,6 +11,8 @@ public record BookingResponseDTO(
         LocalDate endTime,
         Boolean status,
         Pet pets,
+        String specialRequest,
+        Double totalPrice,
         ServiceEntity services,
         UserEntity owners) {
 }

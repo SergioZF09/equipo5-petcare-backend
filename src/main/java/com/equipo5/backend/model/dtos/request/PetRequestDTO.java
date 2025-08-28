@@ -8,5 +8,7 @@ public record PetRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'species'")
         String species,
         @NotBlank(message = "Incomplete attribute: 'breed'")
-        String breed) {
+        String breed,
+        Integer age,
+        String specialNotes) {
 }

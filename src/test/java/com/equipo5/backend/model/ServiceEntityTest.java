@@ -19,7 +19,7 @@ class ServiceEntityTest {
         Booking booking = new Booking();
 
         ServiceEntity service = new ServiceEntity();
-        service.setPrice(11.11);
+        service.setRateService(11.11);
         service.setDescription("test");
         service.setName("Service John Doe");
         service.setOwners(user);
@@ -29,7 +29,7 @@ class ServiceEntityTest {
         assertEquals(service.getOwners(), user);
         assertEquals("Service John Doe", service.getName());
         assertEquals("test", service.getDescription());
-        assertEquals(11.11, service.getPrice());
+        assertEquals(11.11, service.getRateService());
     }
 
 }

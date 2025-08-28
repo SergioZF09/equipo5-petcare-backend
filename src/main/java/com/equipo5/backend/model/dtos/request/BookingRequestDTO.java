@@ -9,6 +9,9 @@ public record BookingRequestDTO(
         LocalDate startTime,
         @NotBlank(message = "Incomplete attribute: 'endTime'")
         LocalDate endTime,
-        @NotBlank(message = "Incomplete attribute: 'status'")
-        Boolean status) {
+        /*@NotBlank(message = "Incomplete attribute: 'status'")*/
+        Boolean status,
+        String specialRequest,
+        @NotBlank(message = "Incomplete attribute: 'totalPrice'")
+        Double totalPrice) {
 }

@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record ServiceEntityRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'name'")
-        String name,
-        @NotBlank(message = "Incomplete attribute: 'description'")
+        String type,
+        //@NotBlank(message = "Incomplete attribute: 'description'")
         String description,
         @NotNull(message = "Incomplete attribute: 'price'")
-        Double price) {
+        Double rate) {
 }
