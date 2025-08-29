@@ -13,6 +13,9 @@ public record UserResponseDTO(
         String name,
         String email,
         String password,
+        String phone,
+        String address,
+        String avatarUser,
         List<Pet> pets,
         List<ServiceEntity> services,
         List<Booking> bookings) {

@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class Pet{
+public class Pet extends TimeStampedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,10 @@ public class Pet{
     private String species;
 
     private String breed;
+
+    private Integer age;
+
+    private String specialNotes;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
