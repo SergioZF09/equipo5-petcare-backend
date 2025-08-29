@@ -28,4 +28,6 @@ public class Pet{
 
     @OneToMany(mappedBy = "pets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
+
+
 }

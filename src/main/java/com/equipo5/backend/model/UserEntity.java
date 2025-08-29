@@ -34,7 +34,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets = new ArrayList<>();
 
-    @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "sitters", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServiceEntity> services = new ArrayList<>();
 
     @OneToMany(mappedBy = "owners", cascade = CascadeType.ALL, orphanRemoval = true)

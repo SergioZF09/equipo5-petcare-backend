@@ -1,6 +1,7 @@
 package com.equipo5.backend.model.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record PetRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'name'")
@@ -8,5 +9,8 @@ public record PetRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'species'")
         String species,
         @NotBlank(message = "Incomplete attribute: 'breed'")
-        String breed) {
+        String breed,
+        @NotNull(message = "Incomplete attribute: ownerId")
+        Long ownerId
+        ) {
 }
