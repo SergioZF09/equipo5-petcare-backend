@@ -4,11 +4,11 @@ import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.ServiceEntity;
 import com.equipo5.backend.model.UserEntity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BookingResponseDTO(
-        LocalDate startTime,
-        LocalDate endTime,
+        LocalDateTime startTime,
+        LocalDateTime endTime,
         Boolean status,
         Pet pets,
         ServiceEntity services,
