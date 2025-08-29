@@ -2,13 +2,13 @@ package com.equipo5.backend.model.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record BookingRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'startTime'")
-        LocalDate startTime,
+        LocalDateTime startTime,
         @NotBlank(message = "Incomplete attribute: 'endTime'")
-        LocalDate endTime,
+        LocalDateTime endTime,
         /*@NotBlank(message = "Incomplete attribute: 'status'")*/
         Boolean status,
         String specialRequest,
