@@ -28,7 +28,7 @@ public class ServiceEntity extends TimeStampedEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity owners;
+    private UserEntity sitters;
 
     @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
