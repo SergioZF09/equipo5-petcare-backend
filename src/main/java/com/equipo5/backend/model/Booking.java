@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
-public class Booking {
+public class Booking extends TimeStampedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,10 @@ public class Booking {
     private LocalDateTime endTime;
 
     private Boolean status;
+
+    private String specialRequest;
+
+    private Double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "pet_id")

@@ -13,17 +13,18 @@ Establecer la relación @ManyToOne desde Service hacia User (el cuidador).
 @Entity
 @Data
 @NoArgsConstructor
-public class ServiceEntity {
+@Table(name = "services")
+public class ServiceEntity extends TimeStampedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String type;
 
     private String description;
 
-    private Double price;
+    private Double rate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
