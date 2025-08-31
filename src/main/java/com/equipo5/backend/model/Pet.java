@@ -32,4 +32,6 @@ public class Pet extends TimeStampedEntity {
 
     @OneToMany(mappedBy = "pets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
+
+
 }
