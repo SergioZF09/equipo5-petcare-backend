@@ -9,6 +9,12 @@ public interface PetService {
 
     PetResponseDTO createPet(PetRequestDTO petRequestDTO);
 
-    List<PetResponseDTO> getAllPets();
+    List<PetResponseDTO> listAllPets();
+
+    PetResponseDTO listPet(Long id);
+
+    PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO);
+
+    void deletePet(Long id);
 
 }

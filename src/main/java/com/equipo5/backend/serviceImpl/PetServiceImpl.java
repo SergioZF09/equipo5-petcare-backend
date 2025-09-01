@@ -1,6 +1,6 @@
 package com.equipo5.backend.serviceImpl;
 
-import com.equipo5.backend.exceptions.EntityNotExistException;
+import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.UserEntity;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PetServiceImpl implements PetService {
@@ -30,7 +31,7 @@ public class PetServiceImpl implements PetService {
     public PetResponseDTO createPet(PetRequestDTO petRequestDTO) {
 
         UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
-                .orElseThrow(() -> new EntityNotExistException("User not found"));
+                .orElseThrow(() -> NoResultsException.of(petRequestDTO.ownerId()));
 
         Pet pet = petMapper.toPet(petRequestDTO);
         pet.setOwner(owner);
@@ -40,8 +41,53 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<PetResponseDTO> getAllPets() {
+    public List<PetResponseDTO> listAllPets() {
         return petMapper.toPetListDTOs(petRepository.findAll());
+    }
+
+    @Override
+    public PetResponseDTO listPet(Long id) {
+        Optional<Pet> petFounded = petRepository.findById(id);
+
+        if (petFounded.isEmpty()) throw NoResultsException.of(id);
+
+        return petMapper.toPetDTO(petRepository.getReferenceById(id));
+    }
+
+    @Override
+    public PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO) {
+        Optional<Pet> petFounded = petRepository.findById(id);
+
+        if (petFounded.isEmpty()) throw NoResultsException.of(id);
+
+        UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
+                .orElseThrow(() -> NoResultsException.of(petRequestDTO.ownerId()));
+
+        Pet petNotModified = petRepository.getReferenceById(id);
+
+        if (petRequestDTO.name() != null) petNotModified.setName(petRequestDTO.name());
+
+        if (petRequestDTO.species() != null) petNotModified.setSpecies(petRequestDTO.species());
+
+        if (petRequestDTO.breed() != null) petNotModified.setBreed(petRequestDTO.breed());
+
+        if (petRequestDTO.ownerId() != null) petNotModified.setOwner(owner);
+
+        if (petRequestDTO.age() != null) petNotModified.setAge(petRequestDTO.age());
+
+        if (petRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(petRequestDTO.specialNotes());
+
+        Pet petModified = petRepository.save(petNotModified);
+        return petMapper.toPetDTO(petModified);
+    }
+
+    @Override
+    public void deletePet(Long id) {
+        Optional<Pet> petFounded = petRepository.findById(id);
+
+        if (petFounded.isEmpty()) throw NoResultsException.of(id);
+
+        petRepository.deleteById(id);
     }
 
 }
