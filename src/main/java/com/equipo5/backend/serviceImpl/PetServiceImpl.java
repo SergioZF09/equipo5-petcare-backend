@@ -9,25 +9,26 @@ import com.equipo5.backend.model.mappers.PetMapper;
 import com.equipo5.backend.repository.PetRepository;
 import com.equipo5.backend.repository.UserRepository;
 import com.equipo5.backend.service.PetService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PetServiceImpl implements PetService {
 
-    @Autowired
-    private PetRepository petRepository;
+    private final PetRepository petRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PetMapper petMapper;
+    private final PetMapper petMapper;
 
     @Override
+    @Transactional
     public PetResponseDTO createPet(PetRequestDTO petRequestDTO) {
 
         UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
@@ -41,11 +42,13 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PetResponseDTO> listAllPets() {
         return petMapper.toPetListDTOs(petRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PetResponseDTO listPet(Long id) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
@@ -55,6 +58,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    @Transactional
     public PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
@@ -82,6 +86,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    @Transactional
     public void deletePet(Long id) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
