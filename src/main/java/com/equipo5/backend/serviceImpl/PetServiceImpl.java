@@ -75,8 +75,6 @@ public class PetServiceImpl implements PetService {
 
         if (petRequestDTO.breed() != null) petNotModified.setBreed(petRequestDTO.breed());
 
-        if (petRequestDTO.ownerId() != null) petNotModified.setOwner(owner);
-
         if (petRequestDTO.age() != null) petNotModified.setAge(petRequestDTO.age());
 
         if (petRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(petRequestDTO.specialNotes());
