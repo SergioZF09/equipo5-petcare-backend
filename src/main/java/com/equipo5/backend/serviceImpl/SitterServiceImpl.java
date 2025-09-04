@@ -1,5 +1,6 @@
 package com.equipo5.backend.serviceImpl;
 
+import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.exceptions.EntityNotExistException;
 import com.equipo5.backend.model.ServiceEntity;
 import com.equipo5.backend.model.UserEntity;
@@ -36,14 +37,14 @@ public class SitterServiceImpl implements SitterService {
     public Optional<ServiceEntityResponseDTO> getSitterById(Long id) {
         return Optional.ofNullable(serviceRepository.findById(id)
                 .map(serviceMapper::toServiceDTO)
-                .orElseThrow(() -> new EntityNotExistException("Sitter not found.")));
+                .orElseThrow(() -> NoResultsException.of(id)));
     }
 
     @Override
     @Transactional
     public ServiceEntityResponseDTO createSitter(Long id, ServiceEntityRequestDTO sitterDTO) {
         UserEntity sitter = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotExistException("Sitter not found."));
+                .orElseThrow(() -> NoResultsException.of(id));
 
         ServiceEntity sitterService = serviceMapper.toService(sitterDTO);
         sitterService.setSitters(sitter);
@@ -55,26 +56,26 @@ public class SitterServiceImpl implements SitterService {
     @Transactional
     public Optional<ServiceEntityResponseDTO> updateSitter(Long id, ServiceEntityRequestDTO sitterDTO) {
         /*
-        * todo: asegurarse con el contexHolder de spring security que solo los cuidadores asignados a
+        * todo: asegurarse con el contextHolder de spring security que solo los cuidadores asignados a
         *  su propio servicio puedan cambiarlo/actualizarlo
         * */
 
-        ServiceEntity modifidSitter = serviceRepository.findById(id)
-                .orElseThrow(() -> new EntityNotExistException("Sitter not found."));
+        ServiceEntity modifiedSitter = serviceRepository.findById(id)
+                .orElseThrow(() -> NoResultsException.of(id));
 
         if (sitterDTO.type() != null){
-            modifidSitter.setType(sitterDTO.type());
+            modifiedSitter.setType(sitterDTO.type());
         }
 
         if (sitterDTO.description() != null){
-            modifidSitter.setDescription(sitterDTO.description());
+            modifiedSitter.setDescription(sitterDTO.description());
         }
 
         if (sitterDTO.rate() != null){
-            modifidSitter.setRate(sitterDTO.rate());
+            modifiedSitter.setRate(sitterDTO.rate());
         }
 
-        return Optional.of(serviceMapper.toServiceDTO(modifidSitter));
+        return Optional.of(serviceMapper.toServiceDTO(modifiedSitter));
     }
 
     @Override
@@ -84,7 +85,7 @@ public class SitterServiceImpl implements SitterService {
             serviceRepository.deleteById(id);
         }
         else {
-            throw new EntityNotExistException("Sitter not found.");
+            throw NoResultsException.of(id);
         }
     }
 }
