@@ -17,4 +17,3 @@ public record UserResponseDTO(
         List<UserResponseServicesDTO> services,
         List<UserResponseBookingsDTO> bookings
 ) {}
-

@@ -1,12 +1,5 @@
 package com.equipo5.backend.model;
 
-
-/*Feature M-04: Crear la entidad Booking
-Tareas:
-Definir la clase Booking con atributos: id, startTime, endTime, status.
-Establecer relaciones @ManyToOne hacia Pet, Service y User (owner).
-*/
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

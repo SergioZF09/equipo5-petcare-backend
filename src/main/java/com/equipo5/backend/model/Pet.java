@@ -1,5 +1,6 @@
 package com.equipo5.backend.model;
 
+import com.equipo5.backend.model.enums.Species;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,8 @@ public class Pet extends TimeStampedEntity {
 
     private String name;
 
-    private String species;
+    @Enumerated(EnumType.STRING)
+    private Species species;
 
     private String breed;
 
@@ -32,6 +34,5 @@ public class Pet extends TimeStampedEntity {
 
     @OneToMany(mappedBy = "pets", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
-
 
 }
