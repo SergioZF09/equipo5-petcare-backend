@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-/*Definir la clase Service con atributos: id, name, description, price.
-Establecer la relación @ManyToOne desde Service hacia User (el cuidador).
-*/
 @Entity
 @Data
 @NoArgsConstructor
