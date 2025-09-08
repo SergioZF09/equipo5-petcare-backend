@@ -4,7 +4,7 @@ import com.equipo5.backend.exception.EmailAlreadyExistsException;
 import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.UserEntity;
 import com.equipo5.backend.model.dtos.request.UserRequestDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseDTO;
+import com.equipo5.backend.model.dtos.response.*;
 import com.equipo5.backend.model.enums.Role;
 import com.equipo5.backend.model.mappers.UserEntityMapper;
 import com.equipo5.backend.repository.UserRepository;
@@ -37,6 +37,7 @@ class UserServiceImplTest {
     private UserRequestDTO request;
     private UserResponseDTO response;
 
+
     @BeforeEach
     void setUp() {
         user = new UserEntity();
@@ -45,7 +46,10 @@ class UserServiceImplTest {
         user.setEmail("john@example.com");
 
         request = new UserRequestDTO("John Doe", "john@example.com", "pass", "123123", "address", "avatar");
-        response = new UserResponseDTO(1L, Role.ADMINISTRATOR, "John Doe", "john@example.com", "", "123123", "address", "avatar", user.getPets(), user.getServices(), user.getBookings());
+        List<UserResponsePetsDTO> pets = mapper.toUserPetsDTOs(user.getPets());
+        List<UserResponseServicesDTO> services = mapper.toUserResponseServicesDTOs(user.getServices());
+        List<UserResponseBookingsDTO> bookings = mapper.toUserBookingsDTOs(user.getBookings());
+        response = new UserResponseDTO(1L, Role.ADMINISTRATOR, "John Doe", "john@example.com", "123123", "address", "avatar", pets, services, bookings);
     }
 
     // ------------------ CREATE USER ------------------
