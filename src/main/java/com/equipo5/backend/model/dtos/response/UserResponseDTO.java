@@ -1,6 +1,7 @@
 package com.equipo5.backend.model.dtos.response;
 
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
+import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO;
 import com.equipo5.backend.model.enums.Role;
 
 import java.util.List;

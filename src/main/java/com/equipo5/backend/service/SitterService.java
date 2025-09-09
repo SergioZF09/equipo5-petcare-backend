@@ -1,7 +1,7 @@
 package com.equipo5.backend.service;
 
 import com.equipo5.backend.model.dtos.request.ServiceEntityRequestDTO;
-import com.equipo5.backend.model.dtos.response.ServiceEntityResponseDTO;
+import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
