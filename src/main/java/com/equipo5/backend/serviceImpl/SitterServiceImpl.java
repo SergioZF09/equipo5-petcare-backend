@@ -1,11 +1,10 @@
 package com.equipo5.backend.serviceImpl;
 
 import com.equipo5.backend.exception.NoResultsException;
-import com.equipo5.backend.exceptions.EntityNotExistException;
 import com.equipo5.backend.model.ServiceEntity;
 import com.equipo5.backend.model.UserEntity;
 import com.equipo5.backend.model.dtos.request.ServiceEntityRequestDTO;
-import com.equipo5.backend.model.dtos.response.ServiceEntityResponseDTO;
+import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO;
 import com.equipo5.backend.model.mappers.ServiceEntityMapper;
 import com.equipo5.backend.repository.ServiceRepository;
 import com.equipo5.backend.repository.UserRepository;
