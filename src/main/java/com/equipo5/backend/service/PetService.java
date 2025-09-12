@@ -13,6 +13,8 @@ public interface PetService {
 
     PetResponseDTO listPet(Long id);
 
+    List<PetResponseDTO> listPetsByOwnerId(Long ownerId);
+
     PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO);
 
     void deletePet(Long id);

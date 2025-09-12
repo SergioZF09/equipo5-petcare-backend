@@ -1,6 +1,7 @@
 package com.equipo5.backend.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class TimeStampedEntity {
     @Column(updatable = false)
     @NotNull
