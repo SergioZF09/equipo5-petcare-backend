@@ -1,16 +1,17 @@
 package com.equipo5.backend.serviceImpl;
 
 import com.equipo5.backend.exception.NoResultsException;
+import com.equipo5.backend.exception.PetNotFoundException;
 import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.UserEntity;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
+import com.equipo5.backend.model.enums.Role;
 import com.equipo5.backend.model.mappers.PetMapper;
 import com.equipo5.backend.repository.PetRepository;
 import com.equipo5.backend.repository.UserRepository;
 import com.equipo5.backend.service.PetService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,9 +53,23 @@ public class PetServiceImpl implements PetService {
     public PetResponseDTO listPet(Long id) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
-        if (petFounded.isEmpty()) throw NoResultsException.of(id);
+        if (petFounded.isEmpty()) throw PetNotFoundException.of(id);
 
         return petMapper.toPetDTO(petRepository.getReferenceById(id));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PetResponseDTO> listPetsByOwnerId(Long ownerId) {
+        Optional<UserEntity> owner = userRepository.findByIdAndRol(ownerId, Role.OWNER);
+
+        if (owner.isEmpty()) {
+            throw NoResultsException.of(ownerId);
+        }
+
+        List<Pet> ownerWithPets = petRepository.findByOwnerId(ownerId);
+
+        return petMapper.toPetListDTOs(ownerWithPets);
     }
 
     @Override
@@ -62,10 +77,7 @@ public class PetServiceImpl implements PetService {
     public PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
-        if (petFounded.isEmpty()) throw NoResultsException.of(id);
-
-        UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
-                .orElseThrow(() -> NoResultsException.of(petRequestDTO.ownerId()));
+        if (petFounded.isEmpty()) throw PetNotFoundException.of(id);
 
         Pet petNotModified = petRepository.getReferenceById(id);
 
@@ -88,7 +100,7 @@ public class PetServiceImpl implements PetService {
     public void deletePet(Long id) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
-        if (petFounded.isEmpty()) throw NoResultsException.of(id);
+        if (petFounded.isEmpty()) throw PetNotFoundException.of(id);
 
         petRepository.deleteById(id);
     }

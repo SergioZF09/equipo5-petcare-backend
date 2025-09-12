@@ -42,11 +42,11 @@ public class SitterServiceImpl implements SitterService {
     @Override
     @Transactional
     public ServiceEntityResponseDTO createSitter(Long id, ServiceEntityRequestDTO sitterDTO) {
-        UserEntity sitter = userRepository.findById(id)
+        UserEntity owners = userRepository.findById(id)
                 .orElseThrow(() -> NoResultsException.of(id));
 
         ServiceEntity sitterService = serviceMapper.toService(sitterDTO);
-        sitterService.setSitters(sitter);
+        sitterService.setSitters(owners);
 
         return serviceMapper.toServiceDTO(serviceRepository.save(sitterService));
     }

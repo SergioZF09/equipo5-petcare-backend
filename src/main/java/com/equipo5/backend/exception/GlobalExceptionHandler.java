@@ -35,6 +35,26 @@ public class GlobalExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(PetNotFoundException.class)
+    ProblemDetail handlePetNotFoundException(PetNotFoundException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+        problemDetail.setTitle("Pet not found");
+        problemDetail.setType(URI.create("/errors/pet-not-found"));
+        problemDetail.setProperty("errorCategory", "Repository");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
+    @ExceptionHandler(ConflictBookingsException.class)
+    ProblemDetail handleConflictBookingsException(ConflictBookingsException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+        problemDetail.setTitle("A book with the same schedule already exists");
+        problemDetail.setType(URI.create("/errors/booking-already-exists"));
+        problemDetail.setProperty("errorCategory", "Business");
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     ProblemDetail handleNotFoundException(ConstraintViolationException e) {
 
