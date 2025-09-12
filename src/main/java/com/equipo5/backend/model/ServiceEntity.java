@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-/*Definir la clase Service con atributos: id, name, description, price.
-Establecer la relación @ManyToOne desde Service hacia User (el cuidador).
-*/
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,7 +25,7 @@ public class ServiceEntity extends TimeStampedEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity owners;
+    private UserEntity sitters;
 
     @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();

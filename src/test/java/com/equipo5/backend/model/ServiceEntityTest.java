@@ -21,11 +21,11 @@ class ServiceEntityTest {
         ServiceEntity service = new ServiceEntity();
         service.setRate(11.11);
         service.setDescription("test");
-        service.setOwners(user);
+        service.setSitters(user);
         service.getBookings().add(booking);
 
         assertTrue(service.getBookings().contains(booking));
-        assertEquals(service.getOwners(), user);
+        assertEquals(service.getSitters(), user);
         assertEquals("test", service.getDescription());
         assertEquals(11.11, service.getRate());
     }

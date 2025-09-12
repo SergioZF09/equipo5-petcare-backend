@@ -1,5 +1,6 @@
 package com.equipo5.backend.model;
 
+import com.equipo5.backend.model.enums.Species;
 import jakarta.validation.*;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ class PetTest {
         // Crear la entidad Pet y asignar campos
         Pet pet = new Pet();
         pet.setName("Fido");
-        pet.setSpecies("Dog");
+        pet.setSpecies(Species.DOG);
         pet.setBreed("Labrador");
         pet.setOwner(owner);
         pet.setBookings(bookings);

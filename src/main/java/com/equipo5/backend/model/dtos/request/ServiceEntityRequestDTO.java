@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ServiceEntityRequestDTO(
+        Long idSitter,
         @NotBlank(message = "Incomplete attribute: 'name'")
         String type,
-        //@NotBlank(message = "Incomplete attribute: 'description'")
         String description,
-        @NotNull(message = "Incomplete attribute: 'price'")
+        @NotNull(message = "Incomplete attribute: 'rate'")
         Double rate) {
 }

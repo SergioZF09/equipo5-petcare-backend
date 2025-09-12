@@ -3,6 +3,7 @@ package com.equipo5.backend.model;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +17,8 @@ class BookingTest {
         ServiceEntity service = new ServiceEntity();
 
         Booking booking = new Booking();
-        booking.setStartTime(LocalDate.of(2025, 8, 26));
-        booking.setEndTime(LocalDate.of(2025, 8, 27));
+        booking.setStartTime(LocalDateTime.of(2025, 8, 26, 12, 00));
+        booking.setEndTime(LocalDateTime.of(2025, 8, 27, 12, 00));
         booking.setStatus(true);
 
         booking.setOwners(user);
