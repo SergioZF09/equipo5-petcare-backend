@@ -1,6 +1,8 @@
-package com.equipo5.backend.model.dtos.request;
+package com.equipo5.backend.model.dtos.request.user;
 
+import com.equipo5.backend.model.enums.Role;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record UserRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'name'")
@@ -9,6 +11,8 @@ public record UserRequestDTO(
         String email,
         @NotBlank(message = "Incomplete attribute: 'password'")
         String password,
+        @NotNull(message = "Incomplete attribute: 'rol'")
+        Role rol,
         String phone,
         String address,
         String avatarUser) {
