@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping
-    @Transactional
     public ResponseEntity<PetResponseDTO> createPet(@RequestBody @Valid PetRequestDTO petRequestDTO) {
         PetResponseDTO petResponseDTO = petService.createPet(petRequestDTO);
 
@@ -49,7 +47,6 @@ public class PetController {
     }
 
     @PutMapping("/{id}")
-    @Transactional
     public ResponseEntity<PetResponseDTO> updatePet(@PathVariable Long id, @RequestBody @Valid PetRequestDTO petRequestDTO) {
         PetResponseDTO petResponseDTO = petService.updatePet(id, petRequestDTO);
 
@@ -57,7 +54,6 @@ public class PetController {
     }
 
     @DeleteMapping("/{id}")
-    @Transactional
     public ResponseEntity<?> deletePet(@PathVariable Long id) {
         petService.deletePet(id);
 
