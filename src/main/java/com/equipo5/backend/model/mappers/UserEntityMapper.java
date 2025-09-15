@@ -4,11 +4,11 @@ import com.equipo5.backend.model.Booking;
 import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.ServiceEntity;
 import com.equipo5.backend.model.UserEntity;
-import com.equipo5.backend.model.dtos.request.UserRequestDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseBookingsDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseDTO;
-import com.equipo5.backend.model.dtos.response.UserResponsePetsDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseServicesDTO;
+import com.equipo5.backend.model.dtos.request.user.UserRequestDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseBookingsDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponsePetsDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseServicesDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;
