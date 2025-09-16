@@ -4,7 +4,7 @@ import com.equipo5.backend.model.enums.Role;
 
 public record UserResponseServiceDTO(
         Long id,
-        Role rol,
+        Role role,
         String name,
         String email,
         String password,
