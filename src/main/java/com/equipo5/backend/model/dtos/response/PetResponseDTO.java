@@ -10,6 +10,7 @@ public record PetResponseDTO(
         String name,
         Species species,
         String breed,
+        Integer age,
         UserRequestDTO owner,
         List<BookingRequestDTO> bookings) {
 }

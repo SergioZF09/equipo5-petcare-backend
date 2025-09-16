@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/pets")
+@RequestMapping("/pets")
 public class PetController {
 
     private final PetService petService;
