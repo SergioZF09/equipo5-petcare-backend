@@ -46,7 +46,7 @@ public class AuthController {
 
     private ResponseEntity<UserResponseDTO> registerUser(UserRequestDTO request, UriComponentsBuilder uriBuilder, Role expectedRole) {
         log.info("CREATE -> New User: {}", request);
-        if (!request.rol().equals(expectedRole)) throw new IllegalArgumentException("Invalid ROL at this endpoint.");
+        if (!request.role().equals(expectedRole)) throw new IllegalArgumentException("Invalid ROL at this endpoint.");
 
         Long id = userService.createUser(request);
         UserResponseDTO dto = userService.readUser(id);

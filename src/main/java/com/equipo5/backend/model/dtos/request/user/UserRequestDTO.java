@@ -12,7 +12,7 @@ public record UserRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'password'")
         String password,
         @NotNull(message = "Incomplete attribute: 'rol'")
-        Role rol,
+        Role role,
         String phone,
         String address,
         String avatarUser) {

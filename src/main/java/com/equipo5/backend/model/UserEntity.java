@@ -33,7 +33,7 @@ public class UserEntity extends TimeStampedEntity {
     private String avatarUser;
 
     @Enumerated(EnumType.STRING)
-    private Role rol;
+    private Role role;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets = new ArrayList<>();
