@@ -3,8 +3,8 @@ package com.equipo5.backend.serviceImpl;
 import com.equipo5.backend.exception.EmailAlreadyExistsException;
 import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.UserEntity;
-import com.equipo5.backend.model.dtos.request.UserRequestDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseDTO;
+import com.equipo5.backend.model.dtos.request.user.UserRequestDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
 import com.equipo5.backend.model.mappers.UserEntityMapper;
 import com.equipo5.backend.repository.UserRepository;
 
@@ -42,6 +42,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    public UserResponseDTO readUser(String email) {
+        UserEntity user = repository.findByEmail(email)
+                .orElseThrow(() -> NoResultsException.of(email));
+        return mapper.toUserDTO(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<UserResponseDTO> readAll(Pageable pageable) {
         Page<UserEntity> users = repository.findAll(PageRequest.of(
                 pageable.getPageNumber(),
@@ -72,7 +80,6 @@ public class UserServiceImpl implements UserService {
         repository.saveAndFlush(user);
     }
 
-
     @Override
     @Transactional
     public void deleteUser(Long id) {
@@ -87,7 +94,7 @@ public class UserServiceImpl implements UserService {
     // Metodo de Consulta unica para centralizar flujo de excepciones
     private UserEntity getUser(Long id) throws NoResultsException {
         if (id == null) {
-            throw NoResultsException.of(null);
+            throw NoResultsException.of("null");
         }
         return repository.findById(id)
                 .orElseThrow(() -> NoResultsException.of(id));

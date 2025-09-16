@@ -1,6 +1,7 @@
 package com.equipo5.backend.model.dtos.response;
 
 import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.equipo5.backend.model.dtos.response;
+package com.equipo5.backend.model.dtos.response.user;
 
 import java.time.LocalDateTime;
 
