@@ -6,7 +6,7 @@ import java.util.List;
 
 public record UserResponseDTO(
         Long id,
-        Role rol,
+        Role role,
         String name,
         String email,
         //String password,

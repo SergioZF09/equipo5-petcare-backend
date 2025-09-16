@@ -61,7 +61,7 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional(readOnly = true)
     public List<PetResponseDTO> listPetsByOwnerId(Long ownerId) {
-        Optional<UserEntity> owner = userRepository.findByIdAndRol(ownerId, Role.OWNER);
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(ownerId, Role.OWNER);
 
         if (owner.isEmpty()) {
             throw NoResultsException.of(ownerId);

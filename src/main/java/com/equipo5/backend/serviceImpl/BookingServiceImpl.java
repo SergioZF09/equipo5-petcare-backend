@@ -45,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
             throw ConflictBookingsException.of("A booking with the same schedule already exists");
         }
 
-        Optional<UserEntity> owner = userRepository.findByIdAndRol(bookingRequestDTO.id_user(), Role.OWNER);
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(bookingRequestDTO.id_user(), Role.OWNER);
 
         if (owner.isEmpty()) {
             throw NoResultsException.of(bookingRequestDTO.id_user());
