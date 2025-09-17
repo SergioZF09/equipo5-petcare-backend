@@ -14,9 +14,9 @@ public interface BookingMapper {
 
     Booking toBooking(BookingRequestDTO bookingDTO);
 
-    @Mapping(target = "id_user", source = "owners.id")
-    @Mapping(target = "id_service", source = "services.id")
-    @Mapping(target = "id_pet", source = "pets.id")
+    @Mapping(target = "user", source = "owners")
+    @Mapping(target = "service", source = "services")
+    @Mapping(target = "pet", source = "pets")
     BookingResponseDTO toBookingDTO(Booking booking);
 
     List<BookingResponseDTO> toBookingDTOs(List<Booking> bookingList);
