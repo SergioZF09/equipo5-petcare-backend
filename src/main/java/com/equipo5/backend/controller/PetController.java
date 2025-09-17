@@ -1,5 +1,6 @@
 package com.equipo5.backend.controller;
 
+import com.equipo5.backend.model.dtos.request.EditPetRequestDTO;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
 import com.equipo5.backend.service.PetService;
@@ -47,8 +48,8 @@ public class PetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PetResponseDTO> updatePet(@PathVariable Long id, @RequestBody @Valid PetRequestDTO petRequestDTO) {
-        PetResponseDTO petResponseDTO = petService.updatePet(id, petRequestDTO);
+    public ResponseEntity<PetResponseDTO> updatePet(@PathVariable Long id, @RequestBody @Valid EditPetRequestDTO editPetRequestDTO) {
+        PetResponseDTO petResponseDTO = petService.updatePet(id, editPetRequestDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(petResponseDTO);
     }

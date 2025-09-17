@@ -4,6 +4,7 @@ import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.exception.PetNotFoundException;
 import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.UserEntity;
+import com.equipo5.backend.model.dtos.request.EditPetRequestDTO;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
 import com.equipo5.backend.model.enums.Role;
@@ -30,12 +31,12 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetResponseDTO createPet(PetRequestDTO petRequestDTO) {
+    public PetResponseDTO createPet(PetRequestDTO editPetRequestDTO) {
 
-        UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
-                .orElseThrow(() -> NoResultsException.of(petRequestDTO.ownerId()));
+        UserEntity owner = userRepository.findById(editPetRequestDTO.ownerId())
+                .orElseThrow(() -> NoResultsException.of(editPetRequestDTO.ownerId()));
 
-        Pet pet = petMapper.toPet(petRequestDTO);
+        Pet pet = petMapper.toPet(editPetRequestDTO);
         pet.setOwner(owner);
         Pet newPet = petRepository.save(pet);
 
@@ -74,22 +75,22 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO) {
+    public PetResponseDTO updatePet(Long id, EditPetRequestDTO editPetRequestDTO) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
         if (petFounded.isEmpty()) throw PetNotFoundException.of(id);
 
         Pet petNotModified = petRepository.getReferenceById(id);
 
-        if (petRequestDTO.name() != null) petNotModified.setName(petRequestDTO.name());
+        if (editPetRequestDTO.name() != null) petNotModified.setName(editPetRequestDTO.name());
 
-        if (petRequestDTO.species() != null) petNotModified.setSpecies(petRequestDTO.species());
+        if (editPetRequestDTO.species() != null) petNotModified.setSpecies(editPetRequestDTO.species());
 
-        if (petRequestDTO.breed() != null) petNotModified.setBreed(petRequestDTO.breed());
+        if (editPetRequestDTO.breed() != null) petNotModified.setBreed(editPetRequestDTO.breed());
 
-        if (petRequestDTO.age() != null) petNotModified.setAge(petRequestDTO.age());
+        if (editPetRequestDTO.age() != null) petNotModified.setAge(editPetRequestDTO.age());
 
-        if (petRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(petRequestDTO.specialNotes());
+        if (editPetRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(editPetRequestDTO.specialNotes());
 
         Pet petModified = petRepository.save(petNotModified);
         return petMapper.toPetDTO(petModified);

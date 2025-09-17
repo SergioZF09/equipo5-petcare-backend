@@ -1,5 +1,6 @@
 package com.equipo5.backend.service;
 
+import com.equipo5.backend.model.dtos.request.EditPetRequestDTO;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
 
@@ -15,7 +16,7 @@ public interface PetService {
 
     List<PetResponseDTO> listPetsByOwnerId(Long ownerId);
 
-    PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO);
+    PetResponseDTO updatePet(Long id, EditPetRequestDTO editPetRequestDTO);
 
     void deletePet(Long id);
 
