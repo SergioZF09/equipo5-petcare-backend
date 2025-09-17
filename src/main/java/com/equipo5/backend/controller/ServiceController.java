@@ -29,7 +29,7 @@ PUT /services/{id} - Actualizar servicio existente✅
 DELETE /services/{id} - Eliminar servicio✅
 */
 @RestController
-@RequestMapping("api/v1/services")
+@RequestMapping("/services")
 @RequiredArgsConstructor
 public class ServiceController {
 
@@ -68,3 +68,4 @@ public class ServiceController {
     }
 
 }
+
