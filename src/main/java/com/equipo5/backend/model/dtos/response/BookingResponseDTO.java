@@ -7,12 +7,13 @@ import java.time.LocalDateTime;
 
 public record BookingResponseDTO(
         Long id,
-        UserResponseServiceDTO user,
-        ServiceEntityResponseDTO service,
-        PetResponseServiceDTO pet,
         LocalDateTime startTime,
         LocalDateTime endTime,
         Boolean status,
         String specialRequest,
-        Double totalPrice) {
+        Double totalPrice,
+        UserResponseServiceDTO user,
+        ServiceEntityResponseDTO service,
+        PetResponseServiceDTO pet
+) {
 }

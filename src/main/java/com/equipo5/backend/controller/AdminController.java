@@ -6,6 +6,7 @@ import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO
 import com.equipo5.backend.service.BookingService;
 import com.equipo5.backend.service.SitterService;
 import com.equipo5.backend.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class AdminController {
     //GET /admin/users → Obtener todos los usuarios
     //@PreAuthorize("isAuthenticated()")
     //@SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para listar todos los usuarios")
     @GetMapping("/users")
     public ResponseEntity<Page<UserResponseDTO>> getAllUsers(
             @PageableDefault(size = 10, sort = "name") Pageable pageable) {
@@ -41,6 +43,7 @@ public class AdminController {
     }
 
     //GET /admin/users/id → Obtener un usuario
+    @Operation(summary = "Endpoint para listar un usuario por su id")
     @GetMapping(path = "/users/{id}")
     public ResponseEntity<UserResponseDTO> getUser(@PathVariable("id") Long id) {
         log.info("READ -> User ID: {}", id);
@@ -50,6 +53,7 @@ public class AdminController {
     //GET /admin/services → Obtener todos los servicios
     //@PreAuthorize("isAuthenticated()")
     //@SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para listar todos los servicios")
     @GetMapping("/services")
     public ResponseEntity<Page<ServiceEntityResponseDTO>> getAllServices(
             @PageableDefault(size = 10, sort = "name") Pageable pageable) {
@@ -60,6 +64,7 @@ public class AdminController {
     //GET /admin/bookings → Obtener todas las reservas
     //@PreAuthorize("isAuthenticated()")
     //@SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para listar todas las reservas")
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingResponseDTO> > getAllBookings() {
         log.info("READ ALL -> Bookings [List]");
@@ -70,6 +75,7 @@ public class AdminController {
     //PUT /admin/users/:userId/block → Bloquear usuario
     //@PreAuthorize("isAuthenticated()")
     //@SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para bloquear un usuario por su id")
     @PutMapping("/users/{id}/block")
     public ResponseEntity<String> blockUser(@PathVariable Long id) {
         return ResponseEntity.ok("User " + id + " blocked (stub)");
@@ -78,6 +84,7 @@ public class AdminController {
     //PUT /admin/users/:userId/unblock → Desbloquear usuario
     //@PreAuthorize("isAuthenticated()")
     //@SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para desbloquear un usuario por su id")
     @PutMapping("/users/{id}/unblock")
     public ResponseEntity<String> unblockUser(@PathVariable Long id) {
         return ResponseEntity.ok("User " + id + " unblocked (stub)");

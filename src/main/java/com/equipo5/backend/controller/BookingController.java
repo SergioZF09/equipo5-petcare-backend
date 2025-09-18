@@ -32,6 +32,13 @@ public class BookingController {
         return ResponseEntity.status(HttpStatus.OK).body(bookingResponseDTOS);
     }
 
+    @GetMapping("owner/{ownerId}")
+    public ResponseEntity<List<BookingResponseDTO>> listBookingsByOwnerId(@PathVariable Long ownerId) {
+        List<BookingResponseDTO> bookingsResponseDTO = bookingService.listBookingsByOwnerId(ownerId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(bookingsResponseDTO);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> cancelBooking(@PathVariable Long id) {
         bookingService.cancelBooking(id);

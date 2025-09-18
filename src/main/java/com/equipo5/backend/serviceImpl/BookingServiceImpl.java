@@ -67,12 +67,27 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BookingResponseDTO> listAllBookings() {
         return bookingMapper.toBookingDTOs(bookingRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<BookingResponseDTO> listBookingsByOwnerId(Long ownerId) {
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(ownerId, Role.OWNER);
+
+        if (owner.isEmpty()) {
+            throw NoResultsException.of(ownerId);
+        }
+
+        List<Booking> ownerWithBookings = bookingRepository.findByOwnersId(ownerId);
+
+        return bookingMapper.toBookingDTOs(ownerWithBookings);
+    }
+
+    @Override
+    @Transactional
     public void cancelBooking(Long id) {
         Optional<Booking> bookingFounded = bookingRepository.findById(id);
 

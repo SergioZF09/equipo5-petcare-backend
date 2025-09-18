@@ -3,8 +3,12 @@ package com.equipo5.backend.serviceImpl;
 import com.equipo5.backend.exception.EmailAlreadyExistsException;
 import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.UserEntity;
-import com.equipo5.backend.model.dtos.request.UserRequestDTO;
+import com.equipo5.backend.model.dtos.request.user.UserRequestDTO;
 import com.equipo5.backend.model.dtos.response.*;
+import com.equipo5.backend.model.dtos.response.user.UserResponseBookingsDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponsePetsDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseServicesDTO;
 import com.equipo5.backend.model.enums.Role;
 import com.equipo5.backend.model.mappers.UserEntityMapper;
 import com.equipo5.backend.repository.UserRepository;
@@ -45,7 +49,7 @@ class UserServiceImplTest {
         user.setName("John Doe");
         user.setEmail("john@example.com");
 
-        request = new UserRequestDTO("John Doe", "john@example.com", "pass", "123123", "address", "avatar");
+        request = new UserRequestDTO("John Doe", "john@example.com", "pass", Role.OWNER, "address", "avatar", "");
         List<UserResponsePetsDTO> pets = mapper.toUserPetsDTOs(user.getPets());
         List<UserResponseServicesDTO> services = mapper.toUserResponseServicesDTOs(user.getServices());
         List<UserResponseBookingsDTO> bookings = mapper.toUserBookingsDTOs(user.getBookings());
@@ -93,7 +97,7 @@ class UserServiceImplTest {
 
     @Test
     void readUser_nullId_throwsException() {
-        assertThrows(NoResultsException.class, () -> service.readUser(null));
+        assertThrows(NoResultsException.class, () -> service.readUser((Long) null));
     }
 
     // ------------------ READ ALL USERS ------------------
@@ -127,15 +131,16 @@ class UserServiceImplTest {
         when(repository.findById(1L)).thenReturn(Optional.of(user));
         when(repository.existsByEmail("njohn@example.com")).thenReturn(false);
 
-        UserRequestDTO updateRequest  = new UserRequestDTO("John Updated", "njohn@example.com", "newPass", "1231234", "newAddress", "newAvatar");
+        UserRequestDTO updateRequest  = new UserRequestDTO("John Updated", "njohn@example.com", "newPass", Role.OWNER, "newAddress", "San Francisco", "newAvatar");
 
         service.updateUser(updateRequest, 1L);
 
         assertEquals("John Updated", user.getName());
         assertEquals("njohn@example.com", user.getEmail());
         assertEquals("newPass", user.getPassword());
-        assertEquals("1231234", user.getPhone());
-        assertEquals("newAddress", user.getAddress());
+        assertEquals(Role.OWNER, user.getRole());
+        assertEquals("newAddress", user.getPhone());
+        assertEquals("San Francisco", user.getAddress());
         assertEquals("newAvatar", user.getAvatarUser());
 
         verify(repository).saveAndFlush(user);
@@ -146,7 +151,7 @@ class UserServiceImplTest {
         when(repository.findById(1L)).thenReturn(Optional.of(user));
         when(repository.existsByEmail("existing@example.com")).thenReturn(true);
 
-        UserRequestDTO updateRequest = new UserRequestDTO("John Doe", "existing@example.com", "pass", "123123", "address", "avatar");
+        UserRequestDTO updateRequest = new UserRequestDTO("John Doe", "existing@example.com", "pass", Role.OWNER, "address", "San Diego", "avatar");
 
         assertThrows(EmailAlreadyExistsException.class, () -> service.updateUser(updateRequest, 1L));
         verify(repository, never()).saveAndFlush(any());

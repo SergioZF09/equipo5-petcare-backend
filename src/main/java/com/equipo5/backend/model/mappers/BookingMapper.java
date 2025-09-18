@@ -5,7 +5,6 @@ import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
 import com.equipo5.backend.model.dtos.response.BookingResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.util.List;
 

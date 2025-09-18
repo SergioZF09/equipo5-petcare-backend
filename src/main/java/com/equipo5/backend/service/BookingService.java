@@ -11,6 +11,8 @@ public interface BookingService {
 
     List<BookingResponseDTO> listAllBookings();
 
+    List<BookingResponseDTO> listBookingsByOwnerId(Long ownerId);
+
     void cancelBooking(Long id);
 
 }

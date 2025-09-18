@@ -4,6 +4,7 @@ import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.dtos.request.ServiceEntityRequestDTO;
 import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO;
 import com.equipo5.backend.service.SitterService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,18 +30,20 @@ PUT /services/{id} - Actualizar servicio existente✅
 DELETE /services/{id} - Eliminar servicio✅
 */
 @RestController
-@RequestMapping("api/v1/services")
+@RequestMapping("services")
 @RequiredArgsConstructor
 public class ServiceController {
 
     private final SitterService sitterService;
 
+    @Operation(summary = "Endpoint para listar todos los servicios")
     @GetMapping("/available")
     public ResponseEntity<Page<ServiceEntityResponseDTO>> getServices(
             @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
         return new ResponseEntity<>(sitterService.getSittersDTO(pageable), HttpStatus.OK);
     }
 
+    @Operation(summary = "Endpoint para listar un servicio por su id")
     @GetMapping("/sitter/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> getService(@PathVariable Long id){
         return sitterService.getSitterById(id)
@@ -48,12 +51,14 @@ public class ServiceController {
                 .orElseThrow(() -> new NoResultsException(id));
     }
 
+    @Operation(summary = "Endpoint para crear un servicio")
     @PostMapping("/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> createService(
             @PathVariable Long id, @RequestBody ServiceEntityRequestDTO serviceRequestDTO){
         return new ResponseEntity<>(sitterService.createSitter(id, serviceRequestDTO), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Endpoint para actualizar un servicio por su id")
     @PutMapping("/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> updateService(
             @PathVariable Long id, @RequestBody ServiceEntityRequestDTO serviceRequestDTO){
@@ -61,6 +66,7 @@ public class ServiceController {
                     .orElseThrow(() -> new NoResultsException(id)), HttpStatus.ACCEPTED);
     }
 
+    @Operation(summary = "Endpoint para eliminar un servicio por su id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable Long id){
         sitterService.deleteSitter(id);
