@@ -20,12 +20,12 @@ class UserEntityTest {
         user.setAddress("Calle");
         user.setPhone("123123123");
         user.setAvatarUser("avatar user");
-        user.setRol(Role.ADMINISTRATOR);
+        user.setRole(Role.ADMINISTRATOR);
 
         assertEquals("John Doe", user.getName());
         assertEquals("john@example.com", user.getEmail());
         assertEquals("12345", user.getPassword());
-        assertEquals(Role.ADMINISTRATOR, user.getRol());
+        assertEquals(Role.ADMINISTRATOR, user.getRole());
     }
 
     //Test de manipulacion de Listas, no hay Persistencia ni Cascada
