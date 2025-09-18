@@ -14,7 +14,7 @@ class ServiceEntityTest {
         user.setName("John Doe");
         user.setEmail("john@example.com");
         user.setPassword("12345");
-        user.setRol(Role.ADMINISTRATOR);
+        user.setRole(Role.ADMINISTRATOR);
 
         Booking booking = new Booking();
 
