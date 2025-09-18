@@ -23,23 +23,54 @@ public class SecurityFilter extends OncePerRequestFilter {
     private final JWTTokenService tokenService;
     private final AuthenticationService authenticationService;
 
+//    @Override
+//    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//        // Obtener el token del header
+//        var authHeader = request.getHeader("Authorization");
+//        if (authHeader != null) {
+//            var token = authHeader.replace("Bearer ", "");
+//            var username = tokenService.getSubject(token); // extract username
+//            if (username != null) {
+//                // Token valido
+//                var user = authenticationService.loadUserByUsername(username);
+//                var authentication = new UsernamePasswordAuthenticationToken(user, null,
+//                        user.getAuthorities()); // Forzamos un inicio de sesion
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//                log.info("TOKEN: " + token);
+//                log.info("USER: " + username);
+//            }
+//        }
+//        filterChain.doFilter(request, response);
+//    }
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Obtener el token del header
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+
+        // Ignorar preflight OPTIONS
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         var authHeader = request.getHeader("Authorization");
-        if (authHeader != null) {
-            var token = authHeader.replace("Bearer ", "");
-            var username = tokenService.getSubject(token); // extract username
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            var token = authHeader.substring(7); // quitar "Bearer "
+            var username = tokenService.getSubject(token);
             if (username != null) {
-                // Token valido
                 var user = authenticationService.loadUserByUsername(username);
-                var authentication = new UsernamePasswordAuthenticationToken(user, null,
-                        user.getAuthorities()); // Forzamos un inicio de sesion
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
                 log.info("TOKEN: " + token);
                 log.info("USER: " + username);
             }
         }
+
+        // Opcional: leer Verifier si lo necesitas
+        var verifier = request.getHeader("Verifier");
+        log.info("VERIFIER: " + verifier); // null si no llega
         filterChain.doFilter(request, response);
     }
 }

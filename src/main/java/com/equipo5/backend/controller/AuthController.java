@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping
 @AllArgsConstructor
