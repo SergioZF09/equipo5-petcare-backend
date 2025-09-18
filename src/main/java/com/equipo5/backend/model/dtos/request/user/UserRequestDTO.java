@@ -17,7 +17,7 @@ public record UserRequestDTO(
         @NotBlank(message = "Incomplete attribute: 'password'")
         String password,
         @Schema(description = "Rol del usuario a elegir 'OWNER', 'SITTER' o 'ADMINISTRATOR'")
-        @NotNull(message = "Incomplete attribute: 'rol'")
+        @NotNull(message = "Incomplete attribute: 'role'")
         Role role,
         @Schema(description = "Número de teléfono del usuario")
         String phone,

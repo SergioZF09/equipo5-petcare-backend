@@ -8,8 +8,10 @@ import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
 import com.equipo5.backend.model.mappers.UserEntityMapper;
 import com.equipo5.backend.repository.UserRepository;
 
+import com.equipo5.backend.security.SecurityConfiguration;
 import com.equipo5.backend.service.UserService;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserEntityMapper mapper;
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -29,6 +32,8 @@ public class UserServiceImpl implements UserService {
             throw EmailAlreadyExistsException.of(request.email());
         }
         UserEntity user = mapper.toUser(request);
+        // 👇 Encriptar password
+        user.setPassword(passwordEncoder.encode(request.password()));
         UserEntity savedUser = repository.save(user);
         return savedUser.getId();
     }

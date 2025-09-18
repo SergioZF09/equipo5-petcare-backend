@@ -7,12 +7,14 @@ import com.equipo5.backend.service.BookingService;
 import com.equipo5.backend.service.SitterService;
 import com.equipo5.backend.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("/admin")
+@PreAuthorize("hasAuthority('ADMINISTRATOR')")
 public class AdminController {
 
     private final UserService userService;
@@ -32,8 +35,8 @@ public class AdminController {
     //private final JWTTokenService tokenService;
 
     //GET /admin/users → Obtener todos los usuarios
-    //@PreAuthorize("isAuthenticated()")
-    //@SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todos los usuarios")
     @GetMapping("/users")
     public ResponseEntity<Page<UserResponseDTO>> getAllUsers(
@@ -51,8 +54,8 @@ public class AdminController {
     }
 
     //GET /admin/services → Obtener todos los servicios
-    //@PreAuthorize("isAuthenticated()")
-    //@SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todos los servicios")
     @GetMapping("/services")
     public ResponseEntity<Page<ServiceEntityResponseDTO>> getAllServices(
@@ -62,8 +65,8 @@ public class AdminController {
     }
 
     //GET /admin/bookings → Obtener todas las reservas
-    //@PreAuthorize("isAuthenticated()")
-    //@SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todas las reservas")
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingResponseDTO> > getAllBookings() {
@@ -73,8 +76,8 @@ public class AdminController {
     }
 
     //PUT /admin/users/:userId/block → Bloquear usuario
-    //@PreAuthorize("isAuthenticated()")
-    //@SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para bloquear un usuario por su id")
     @PutMapping("/users/{id}/block")
     public ResponseEntity<String> blockUser(@PathVariable Long id) {
@@ -82,8 +85,8 @@ public class AdminController {
     }
 
     //PUT /admin/users/:userId/unblock → Desbloquear usuario
-    //@PreAuthorize("isAuthenticated()")
-    //@SecurityRequirement(name = "bearer-key")
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para desbloquear un usuario por su id")
     @PutMapping("/users/{id}/unblock")
     public ResponseEntity<String> unblockUser(@PathVariable Long id) {
