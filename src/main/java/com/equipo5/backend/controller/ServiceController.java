@@ -5,6 +5,8 @@ import com.equipo5.backend.model.dtos.request.ServiceEntityRequestDTO;
 import com.equipo5.backend.model.dtos.response.services.ServiceEntityResponseDTO;
 import com.equipo5.backend.service.SitterService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,14 +32,17 @@ POST /services - Crear nuevo servicio✅
 PUT /services/{id} - Actualizar servicio existente✅
 DELETE /services/{id} - Eliminar servicio✅
 */
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("services")
+@RequestMapping("/services")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyAuthority('SITTER','ADMINISTRATOR')")
 public class ServiceController {
 
     private final SitterService sitterService;
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todos los servicios")
     @GetMapping("/available")
     public ResponseEntity<Page<ServiceEntityResponseDTO>> getServices(
@@ -45,6 +50,8 @@ public class ServiceController {
         return new ResponseEntity<>(sitterService.getSittersDTO(pageable), HttpStatus.OK);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar un servicio por su id")
     @GetMapping("/sitter/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> getService(@PathVariable Long id){
@@ -53,13 +60,17 @@ public class ServiceController {
                 .orElseThrow(() -> new NoResultsException(id));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para crear un servicio")
     @PostMapping("/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> createService(
-            @PathVariable Long id, @RequestBody ServiceEntityRequestDTO serviceRequestDTO){
+            @PathVariable Long id, @RequestBody @Valid ServiceEntityRequestDTO serviceRequestDTO){
         return new ResponseEntity<>(sitterService.createSitter(id, serviceRequestDTO), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para actualizar un servicio por su id")
     @PutMapping("/{id}")
     public ResponseEntity<ServiceEntityResponseDTO> updateService(
@@ -68,6 +79,8 @@ public class ServiceController {
                     .orElseThrow(() -> new NoResultsException(id)), HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para eliminar un servicio por su id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable Long id){

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PetService {
 
-    PetResponseDTO createPet(PetRequestDTO petRequestDTO);
+    PetResponseDTO createPet(Long id, PetRequestDTO petRequestDTO);
 
     List<PetResponseDTO> listAllPets();
 

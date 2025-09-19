@@ -32,12 +32,12 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetResponseDTO createPet(PetRequestDTO editPetRequestDTO) {
+    public PetResponseDTO createPet(Long id, PetRequestDTO petRequestDTO) {
 
-        UserEntity owner = userRepository.findById(editPetRequestDTO.ownerId())
-                .orElseThrow(() -> NoResultsException.of(editPetRequestDTO.ownerId()));
+        UserEntity owner = userRepository.findById(id)
+                .orElseThrow(() -> NoResultsException.of(id));
 
-        Pet pet = petMapper.toPet(editPetRequestDTO);
+        Pet pet = petMapper.toPet(petRequestDTO);
         pet.setOwner(owner);
         Pet newPet = petRepository.save(pet);
 

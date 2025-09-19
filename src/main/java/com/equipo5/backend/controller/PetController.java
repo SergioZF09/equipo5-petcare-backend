@@ -5,6 +5,7 @@ import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
 import com.equipo5.backend.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,19 @@ public class PetController {
 
     private final PetService petService;
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para crear una mascota")
-    @PostMapping
-    public ResponseEntity<PetResponseDTO> createPet(@RequestBody @Valid PetRequestDTO petRequestDTO) {
-        PetResponseDTO petResponseDTO = petService.createPet(petRequestDTO);
+    @PostMapping("/{id}")
+    public ResponseEntity<PetResponseDTO> createPet(
+            @PathVariable Long id, @RequestBody @Valid PetRequestDTO petRequestDTO) {
+        PetResponseDTO petResponseDTO = petService.createPet(id, petRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(petResponseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todas las mascotas")
     @GetMapping
     public ResponseEntity<List<PetResponseDTO>> listAllPets() {
@@ -39,6 +45,8 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.OK).body(petResponseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar una mascota por su id")
     @GetMapping("/{id}")
     public ResponseEntity<PetResponseDTO> listPet(@PathVariable Long id) {
@@ -47,6 +55,8 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.OK).body(petResponseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar todas las mascotas de un dueño por el id del dicho dueño")
     @GetMapping("/owner/{ownerId}")
     public ResponseEntity<List<PetResponseDTO>> listPetsByOwnerId(@PathVariable Long ownerId) {
@@ -55,6 +65,8 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.OK).body(petResponseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para actualizar una mascota por su id")
     @PutMapping("/{id}")
     public ResponseEntity<PetResponseDTO> updatePet(@PathVariable Long id, @RequestBody @Valid EditPetRequestDTO editPetRequestDTO) {
@@ -63,6 +75,8 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.OK).body(petResponseDTO);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para eliminar una mascota por su id")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePet(@PathVariable Long id) {

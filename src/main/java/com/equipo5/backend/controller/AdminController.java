@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 @Slf4j
@@ -46,6 +47,8 @@ public class AdminController {
     }
 
     //GET /admin/users/id → Obtener un usuario
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
     @Operation(summary = "Endpoint para listar un usuario por su id")
     @GetMapping(path = "/users/{id}")
     public ResponseEntity<UserResponseDTO> getUser(@PathVariable("id") Long id) {

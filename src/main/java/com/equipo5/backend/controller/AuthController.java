@@ -36,6 +36,7 @@ public class AuthController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JWTTokenService tokenService;
+
     @Operation(summary = "Endpoint para registrar un cuidador")
     @PostMapping("/sitters/register")
     public ResponseEntity<UserResponseDTO> registerSitter(@RequestBody @Valid UserRequestDTO request, UriComponentsBuilder uriBuilder) {

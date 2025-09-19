@@ -34,27 +34,29 @@ public class JWTTokenService {
 
     public String getSubject(String token) {
         if (token == null) {
-            throw new RuntimeException();
+            throw new RuntimeException("Token is null");
         }
-        DecodedJWT verifier = null;
+
         try {
-            Algorithm algorithm = Algorithm.HMAC256(apiSecret); // validando firma
-            verifier = JWT.require(algorithm)
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+            DecodedJWT decodedJWT = JWT.require(algorithm)
                     .withIssuer("petcare")
                     .build()
-                    .verify(token);
-            verifier.getSubject();
+                    .verify(token); // valida y decodifica
+
+            String subject = decodedJWT.getSubject();
+            if (subject == null) {
+                throw new RuntimeException("Token subject is null");
+            }
+            return subject;
+
         } catch (JWTVerificationException exception) {
-            System.out.println(exception.toString());
+            throw new RuntimeException("Invalid token: " + exception.getMessage(), exception);
         }
-        if (verifier.getSubject() == null) {
-            throw new RuntimeException("Invalid Verifier");
-        }
-        return verifier.getSubject();
     }
 
     private Instant getExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
+        return Instant.now().plus(Duration.ofHours(2));
     }
 
 }
