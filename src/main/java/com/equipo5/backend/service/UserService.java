@@ -1,7 +1,7 @@
 package com.equipo5.backend.service;
 
-import com.equipo5.backend.model.dtos.request.UserRequestDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseDTO;
+import com.equipo5.backend.model.dtos.request.user.UserRequestDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,9 +11,10 @@ import org.springframework.data.domain.Pageable;
 // D deleteUser
 public interface UserService {
 
-    public Long createUser(UserRequestDTO request) ;
-    public UserResponseDTO readUser(Long id) ;
-    public Page<UserResponseDTO> readAll(Pageable pageable) ;
-    public void updateUser(UserRequestDTO request, Long id) ;
+    public Long createUser(UserRequestDTO request);
+    public UserResponseDTO readUser(Long id);
+    public UserResponseDTO readUser(String email);
+    public Page<UserResponseDTO> readAll(Pageable pageable);
+    public void updateUser(UserRequestDTO request, Long id);
     public void deleteUser(Long id) ;
 }

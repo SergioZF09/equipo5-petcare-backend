@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    Optional<Booking> findByOwnersId(Long ownerId);
+    List<Booking> findByOwnersId(Long ownerId);
     //Optional<Booking> findBySitterId(Long sitterId);
     @Query("SELECT b FROM Booking b WHERE (:startTime < b.endTime AND :endTime > b.startTime) AND b.status = true")
     Optional<Booking> findConflictsBookings(@Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);

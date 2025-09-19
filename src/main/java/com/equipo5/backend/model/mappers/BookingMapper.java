@@ -5,7 +5,6 @@ import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
 import com.equipo5.backend.model.dtos.response.BookingResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.util.List;
 
@@ -14,9 +13,9 @@ public interface BookingMapper {
 
     Booking toBooking(BookingRequestDTO bookingDTO);
 
-    @Mapping(target = "id_user", source = "owners.id")
-    @Mapping(target = "id_service", source = "services.id")
-    @Mapping(target = "id_pet", source = "pets.id")
+    @Mapping(target = "user", source = "owners")
+    @Mapping(target = "service", source = "services")
+    @Mapping(target = "pet", source = "pets")
     BookingResponseDTO toBookingDTO(Booking booking);
 
     List<BookingResponseDTO> toBookingDTOs(List<Booking> bookingList);

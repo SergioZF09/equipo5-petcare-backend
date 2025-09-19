@@ -4,6 +4,7 @@ import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.exception.PetNotFoundException;
 import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.UserEntity;
+import com.equipo5.backend.model.dtos.request.EditPetRequestDTO;
 import com.equipo5.backend.model.dtos.request.PetRequestDTO;
 import com.equipo5.backend.model.dtos.response.PetResponseDTO;
 import com.equipo5.backend.model.enums.Role;
@@ -12,6 +13,7 @@ import com.equipo5.backend.repository.PetRepository;
 import com.equipo5.backend.repository.UserRepository;
 import com.equipo5.backend.service.PetService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +32,10 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetResponseDTO createPet(PetRequestDTO petRequestDTO) {
+    public PetResponseDTO createPet(Long id, PetRequestDTO petRequestDTO) {
 
-        UserEntity owner = userRepository.findById(petRequestDTO.ownerId())
-                .orElseThrow(() -> NoResultsException.of(petRequestDTO.ownerId()));
+        UserEntity owner = userRepository.findById(id)
+                .orElseThrow(() -> NoResultsException.of(id));
 
         Pet pet = petMapper.toPet(petRequestDTO);
         pet.setOwner(owner);
@@ -61,7 +63,7 @@ public class PetServiceImpl implements PetService {
     @Override
     @Transactional(readOnly = true)
     public List<PetResponseDTO> listPetsByOwnerId(Long ownerId) {
-        Optional<UserEntity> owner = userRepository.findByIdAndRol(ownerId, Role.OWNER);
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(ownerId, Role.OWNER);
 
         if (owner.isEmpty()) {
             throw NoResultsException.of(ownerId);
@@ -74,22 +76,22 @@ public class PetServiceImpl implements PetService {
 
     @Override
     @Transactional
-    public PetResponseDTO updatePet(Long id, PetRequestDTO petRequestDTO) {
+    public PetResponseDTO updatePet(Long id, EditPetRequestDTO editPetRequestDTO) {
         Optional<Pet> petFounded = petRepository.findById(id);
 
         if (petFounded.isEmpty()) throw PetNotFoundException.of(id);
 
         Pet petNotModified = petRepository.getReferenceById(id);
 
-        if (petRequestDTO.name() != null) petNotModified.setName(petRequestDTO.name());
+        if (editPetRequestDTO.name() != null) petNotModified.setName(editPetRequestDTO.name());
 
-        if (petRequestDTO.species() != null) petNotModified.setSpecies(petRequestDTO.species());
+        if (editPetRequestDTO.species() != null) petNotModified.setSpecies(editPetRequestDTO.species());
 
-        if (petRequestDTO.breed() != null) petNotModified.setBreed(petRequestDTO.breed());
+        if (editPetRequestDTO.breed() != null) petNotModified.setBreed(editPetRequestDTO.breed());
 
-        if (petRequestDTO.age() != null) petNotModified.setAge(petRequestDTO.age());
+        if (editPetRequestDTO.age() != null) petNotModified.setAge(editPetRequestDTO.age());
 
-        if (petRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(petRequestDTO.specialNotes());
+        if (editPetRequestDTO.specialNotes() != null) petNotModified.setSpecialNotes(editPetRequestDTO.specialNotes());
 
         Pet petModified = petRepository.save(petNotModified);
         return petMapper.toPetDTO(petModified);

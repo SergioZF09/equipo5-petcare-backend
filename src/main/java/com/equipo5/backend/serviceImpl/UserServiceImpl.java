@@ -3,13 +3,15 @@ package com.equipo5.backend.serviceImpl;
 import com.equipo5.backend.exception.EmailAlreadyExistsException;
 import com.equipo5.backend.exception.NoResultsException;
 import com.equipo5.backend.model.UserEntity;
-import com.equipo5.backend.model.dtos.request.UserRequestDTO;
-import com.equipo5.backend.model.dtos.response.UserResponseDTO;
+import com.equipo5.backend.model.dtos.request.user.UserRequestDTO;
+import com.equipo5.backend.model.dtos.response.user.UserResponseDTO;
 import com.equipo5.backend.model.mappers.UserEntityMapper;
 import com.equipo5.backend.repository.UserRepository;
 
+import com.equipo5.backend.security.SecurityConfiguration;
 import com.equipo5.backend.service.UserService;
 import org.springframework.data.domain.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserEntityMapper mapper;
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -29,6 +32,8 @@ public class UserServiceImpl implements UserService {
             throw EmailAlreadyExistsException.of(request.email());
         }
         UserEntity user = mapper.toUser(request);
+        // 👇 Encriptar password
+        user.setPassword(passwordEncoder.encode(request.password()));
         UserEntity savedUser = repository.save(user);
         return savedUser.getId();
     }
@@ -37,6 +42,14 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserResponseDTO readUser(Long id) {
         UserEntity user = getUser(id);
+        return mapper.toUserDTO(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserResponseDTO readUser(String email) {
+        UserEntity user = repository.findByEmail(email)
+                .orElseThrow(() -> NoResultsException.of(email));
         return mapper.toUserDTO(user);
     }
 
@@ -72,7 +85,6 @@ public class UserServiceImpl implements UserService {
         repository.saveAndFlush(user);
     }
 
-
     @Override
     @Transactional
     public void deleteUser(Long id) {
@@ -87,7 +99,7 @@ public class UserServiceImpl implements UserService {
     // Metodo de Consulta unica para centralizar flujo de excepciones
     private UserEntity getUser(Long id) throws NoResultsException {
         if (id == null) {
-            throw NoResultsException.of(null);
+            throw NoResultsException.of("null");
         }
         return repository.findById(id)
                 .orElseThrow(() -> NoResultsException.of(id));

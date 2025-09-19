@@ -45,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
             throw ConflictBookingsException.of("A booking with the same schedule already exists");
         }
 
-        Optional<UserEntity> owner = userRepository.findByIdAndRol(bookingRequestDTO.id_user(), Role.OWNER);
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(bookingRequestDTO.id_user(), Role.OWNER);
 
         if (owner.isEmpty()) {
             throw NoResultsException.of(bookingRequestDTO.id_user());
@@ -67,12 +67,27 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BookingResponseDTO> listAllBookings() {
         return bookingMapper.toBookingDTOs(bookingRepository.findAll());
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<BookingResponseDTO> listBookingsByOwnerId(Long ownerId) {
+        Optional<UserEntity> owner = userRepository.findByIdAndRole(ownerId, Role.OWNER);
+
+        if (owner.isEmpty()) {
+            throw NoResultsException.of(ownerId);
+        }
+
+        List<Booking> ownerWithBookings = bookingRepository.findByOwnersId(ownerId);
+
+        return bookingMapper.toBookingDTOs(ownerWithBookings);
+    }
+
+    @Override
+    @Transactional
     public void cancelBooking(Long id) {
         Optional<Booking> bookingFounded = bookingRepository.findById(id);
 
