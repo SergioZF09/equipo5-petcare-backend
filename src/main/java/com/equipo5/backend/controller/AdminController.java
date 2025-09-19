@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +64,7 @@ public class AdminController {
     @Operation(summary = "Endpoint para listar todos los servicios")
     @GetMapping("/services")
     public ResponseEntity<Page<ServiceEntityResponseDTO>> getAllServices(
-            @PageableDefault(size = 10, sort = "name") Pageable pageable) {
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         log.info("READ ALL -> Services");
         return ResponseEntity.ok(sitterService.getSittersDTO(pageable));
     }

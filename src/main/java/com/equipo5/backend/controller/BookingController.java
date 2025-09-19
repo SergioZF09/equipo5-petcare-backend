@@ -1,7 +1,9 @@
 package com.equipo5.backend.controller;
 
 import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
+import com.equipo5.backend.model.dtos.request.EditBookingStatusRequestDTO;
 import com.equipo5.backend.model.dtos.response.BookingResponseDTO;
+import com.equipo5.backend.model.dtos.response.BookingStatusResponseDTO;
 import com.equipo5.backend.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -55,10 +57,20 @@ public class BookingController {
 
     @PreAuthorize("isAuthenticated()")
     @SecurityRequirement(name = "bearer-key")
-    @Operation(summary = "Endpoint para cancelar/eliminar una reserva por su id")
+    @Operation(summary = "Endpoint para cancelar una reserva por su id")
+    @PutMapping("/{id}")
+    public ResponseEntity<BookingStatusResponseDTO> cancelBooking(@PathVariable Long id, @RequestBody EditBookingStatusRequestDTO editBookingStatusRequestDTO) {
+        BookingStatusResponseDTO bookingStatusResponseDTO = bookingService.cancelBooking(id, editBookingStatusRequestDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(bookingStatusResponseDTO);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @SecurityRequirement(name = "bearer-key")
+    @Operation(summary = "Endpoint para eliminar una reserva por su id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> cancelBooking(@PathVariable Long id) {
-        bookingService.cancelBooking(id);
+    public ResponseEntity<?> deleteBooking(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

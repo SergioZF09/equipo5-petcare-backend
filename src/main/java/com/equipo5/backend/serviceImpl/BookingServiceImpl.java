@@ -7,7 +7,9 @@ import com.equipo5.backend.model.Pet;
 import com.equipo5.backend.model.ServiceEntity;
 import com.equipo5.backend.model.UserEntity;
 import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
+import com.equipo5.backend.model.dtos.request.EditBookingStatusRequestDTO;
 import com.equipo5.backend.model.dtos.response.BookingResponseDTO;
+import com.equipo5.backend.model.dtos.response.BookingStatusResponseDTO;
 import com.equipo5.backend.model.enums.Role;
 import com.equipo5.backend.model.mappers.BookingMapper;
 import com.equipo5.backend.repository.BookingRepository;
@@ -87,8 +89,23 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public BookingStatusResponseDTO cancelBooking(Long id, EditBookingStatusRequestDTO editBookingStatusRequestDTO) {
+        Optional<Booking> bookingFounded = bookingRepository.findById(id);
+
+        if (bookingFounded.isEmpty()) throw NoResultsException.of(id);
+
+        Booking bookingStatusNotModified = bookingRepository.getReferenceById(id);
+
+        if(editBookingStatusRequestDTO.status() != null) bookingStatusNotModified.setStatus(false);
+
+        Booking bookingStatusModified = bookingRepository.save(bookingStatusNotModified);
+
+        return bookingMapper.toBookingStatusDTO(bookingStatusModified);
+    }
+
+    @Override
     @Transactional
-    public void cancelBooking(Long id) {
+    public void deleteBooking(Long id) {
         Optional<Booking> bookingFounded = bookingRepository.findById(id);
 
         if (bookingFounded.isPresent()) {
