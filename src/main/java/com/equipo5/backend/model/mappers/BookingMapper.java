@@ -3,6 +3,7 @@ package com.equipo5.backend.model.mappers;
 import com.equipo5.backend.model.Booking;
 import com.equipo5.backend.model.dtos.request.BookingRequestDTO;
 import com.equipo5.backend.model.dtos.response.BookingResponseDTO;
+import com.equipo5.backend.model.dtos.response.BookingStatusResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,6 +18,8 @@ public interface BookingMapper {
     @Mapping(target = "service", source = "services")
     @Mapping(target = "pet", source = "pets")
     BookingResponseDTO toBookingDTO(Booking booking);
+
+    BookingStatusResponseDTO toBookingStatusDTO(Booking booking);
 
     List<BookingResponseDTO> toBookingDTOs(List<Booking> bookingList);
 }
