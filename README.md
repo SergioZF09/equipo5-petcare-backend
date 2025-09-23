@@ -1,4 +1,4 @@
-# 🐾 PetCare Platform - Plataforma de Gestión de Servicios para Mascotas.
+# 🐾 PetCare Platform - El puente seguro entre dueños y cuidadores.
 
 <div align="center">
 
@@ -10,9 +10,7 @@
 
 ## **🏆 Proyecto desarrollado para el hackathon ONE - NoCountry**
 
-*Una plataforma moderna para conectar dueños de mascotas con cuidadores y servicios especializados.*
-
-
+*Plataforma integral para conectar dueños de mascotas, cuidadores y administradores en un ecosistema seguro, moderno y colaborativo.*
 </div>
 
 ---
@@ -26,7 +24,7 @@
 
 ## 📖 **Descripción del Proyecto**
 
-**PetCare Platform** es la API RESTful que impulsa una plataforma de reservas y gestión de servicios para mascotas. Permite a usuarios registrar mascotas, reservar servicios, gestionar perfiles y administrar reservas de manera segura y eficiente.
+**PetCare Platform** es una aplicación web que impulsa una plataforma de reservas y gestión de servicios para mascotas. Permite a usuarios registrar mascotas, reservar servicios, gestionar perfiles y administrar reservas de manera segura y eficiente.
 
 ### 🎯 **Objetivos Principales**
 - Facilitar la conexión entre dueños de mascotas y cuidadores/servicios.
